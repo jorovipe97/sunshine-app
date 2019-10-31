@@ -220,9 +220,30 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             loadWeatherData();
             return true;
         }
+        else if (id == R.id.action_open_map) {
+            // C (2) Launch the map when the map menu item is clicked
+            String location = "Medellin, Universidad Pontificia Bolivariana";
+            openMap(location);
+            return true;
+        }
 
-        // TODO (2) Launch the map when the map menu item is clicked
 
         return super.onOptionsItemSelected(item);
     }
+
+    void openMap(String location) {
+        Uri.Builder builder = new Uri.Builder();
+        Uri uri = builder.scheme("geo")
+                .appendPath("0,0")
+                .appendQueryParameter("q", location)
+                .build();
+
+        Intent openMapApp = new Intent(Intent.ACTION_VIEW);
+        openMapApp.setData(uri);
+        if (openMapApp.resolveActivity(getPackageManager()) != null) {
+            startActivity(openMapApp);
+        }
+    }
+
+
 }
